@@ -99,7 +99,7 @@ def init_execution_pool(
 
 
 class SandboxFusionTool(BaseTool):
-    """A tool for executing the code using sanbox fusion image.
+    """A tool for executing the code using sandbox fusion image.
 
     - `get_openai_tool_schema`: return the tool schema in OpenAI format.
     - `create`: create a tool instance for a trajectory.
