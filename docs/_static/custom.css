@@ -5,14 +5,19 @@
     padding: 1.618em 3.236em !important;
 }
 
-/* Adjust the content wrapper - will be set by JavaScript */
+/* Adjust the content wrapper - will be set by JavaScript on desktop */
 .wy-nav-content-wrap {
-    margin-left: 300px;
     transition: margin-left 0.2s ease;
     width: auto !important;
     position: relative !important;
     background: white !important;
     min-height: 100vh !important;
+}
+
+@media (min-width: 769px) {
+    .wy-nav-content-wrap {
+        margin-left: 300px;
+    }
 }
 
 /* Make the main content area responsive */
@@ -42,7 +47,8 @@
     }
 }
 
-/* Resizable sidebar styles */
+/* Resizable sidebar styles - desktop only */
+@media (min-width: 769px) {
 .wy-nav-side {
     position: fixed !important;
     top: 0 !important;
@@ -54,6 +60,7 @@
     display: flex;
     flex-direction: column;
     z-index: 200 !important;
+}
 }
 
 /* Ensure sidebar header (logo, search) adapts to width */
