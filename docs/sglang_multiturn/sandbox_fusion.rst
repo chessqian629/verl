@@ -80,6 +80,8 @@ Configuration Parameters
 +----------------------------+--------------------------------------------------------------+
 | `sandbox_fusion_url`       | URL for the veFaas sandbox execution service                 |
 +----------------------------+--------------------------------------------------------------+
+| `memory_limit_mb`          | Memory limit (in MB) for each sandbox instance. Default: 1024|
++----------------------------+--------------------------------------------------------------+
 
 Rate Limiting Design
 -----------------------

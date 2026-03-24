@@ -138,8 +138,8 @@ def test_prime_code_sandbox_fusion():
 
     for completion, ground_truth, score_ in zip(prime_code_answers, prime_code_gts, prime_code_scores, strict=True):
         score = default_compute_score(
-            data_source, completion, ground_truth, extra_info={"sandbox_fusion_url": sandbox_fusion_url}
-        )  # <-- Use the URL obtained from the environment variable
+            data_source, completion, ground_truth, sandbox_fusion_url=sandbox_fusion_url
+        )
         assert float(score) == score_
 
 
@@ -155,13 +155,12 @@ def test_continuous_score_consistency():
     ground_truth = prime_code_gts[1]  # Use the second sample (9/11 pass, first 9 pass)
     expected_continuous_score = 0.9
 
-    # 1. Calculate score using prime_code (default) with continuous=True
+    # 1. Calculate score using sandbox_fusion with continuous=True
     prime_score, _ = sandbox_fusion.compute_score(
-        os.environ.get("SANDBOX_FUSION_URL"), None, completion, ground_truth, continuous=True
+        os.environ.get("SANDBOX_FUSION_URL"), None, 1024, completion, ground_truth, continuous=True
     )
 
-    # 2. Calculate score using sandbox_fusion with continuous=True
-    # Ensure the extra_info key triggers the sandbox_fusion path in default_compute_score
+    # 2. Calculate score using prime_code (default) with continuous=True
     fusion_score, _ = prime_code.compute_score(completion, ground_truth, continuous=True)
 
     # 3. Assert scores are equal (using pytest.approx for float comparison)
