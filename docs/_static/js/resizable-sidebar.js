@@ -36,8 +36,13 @@ document.addEventListener('DOMContentLoaded', function() {
         return getInitialWidth();
     };
     
-    // Apply width to sidebar and content
+    let isApplyingWidth = false;
+    
+    // Apply width to sidebar and content (desktop only)
     const applyWidth = (width) => {
+        // On mobile, let the theme handle layout natively
+        if (window.innerWidth <= 768) return;
+        
         // Update sidebar width
         sidebar.style.width = width + 'px';
         
@@ -55,12 +60,26 @@ document.addEventListener('DOMContentLoaded', function() {
         content.offsetHeight;
         
         // Trigger window resize event to notify other components
+        isApplyingWidth = true;
         window.dispatchEvent(new Event('resize'));
+        isApplyingWidth = false;
     };
     
     // Initialize with saved width
     const initialWidth = loadWidth();
     applyWidth(initialWidth);
+    
+    // Re-apply width when switching from mobile to desktop (debounced)
+    let resizeTimer = null;
+    window.addEventListener('resize', () => {
+        if (isApplyingWidth) return;
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            if (window.innerWidth > 768) {
+                applyWidth(loadWidth());
+            }
+        }, 100);
+    });
     
     // Mouse down on resize handle
     resizeHandle.addEventListener('mousedown', (e) => {
